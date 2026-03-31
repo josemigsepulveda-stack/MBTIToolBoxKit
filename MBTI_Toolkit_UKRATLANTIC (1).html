@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>MBTI Toolkit — UKRATLANTIC</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Calibri, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: linear-gradient(135deg, #f5f7fa, #e4e9f0); min-height: 100vh; color: #333; }
+
+.header { background: linear-gradient(135deg, #005B96, #009B8D); color: white; padding: 20px 16px 14px; text-align: center; }
+.header .sub { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; opacity: .8; margin-bottom: 4px; }
+.header h1 { font-size: 26px; font-weight: 800; margin: 0; }
+.header p { font-size: 13px; opacity: .85; margin-top: 4px; }
+
+.lang-bar { display: flex; justify-content: center; gap: 8px; padding: 12px 16px; background: white; border-bottom: 1px solid #e0e0e0; }
+.lang-btn { padding: 6px 18px; border-radius: 20px; border: 1px solid #ccc; background: white; color: #333; font-size: 13px; font-weight: 600; cursor: pointer; transition: all .2s; }
+.lang-btn.active { border: 2px solid #005B96; background: #005B96; color: white; }
+
+.tabs { display: flex; background: white; border-bottom: 2px solid #e0e0e0; }
+.tab-btn { flex: 1; padding: 13px 8px; border: none; border-bottom: 3px solid transparent; background: white; color: #666; font-size: 15px; font-weight: 700; cursor: pointer; transition: all .2s; }
+.tab-btn.active { border-bottom-color: #E8772E; background: #FFF8F0; color: #E8772E; }
+
+.content { padding: 16px; max-width: 720px; margin: 0 auto; }
+.section-title { text-align: center; margin-bottom: 16px; }
+.section-title h2 { font-size: 20px; color: #333; margin-bottom: 4px; }
+.section-title p { font-size: 13px; color: #888; }
+
+/* Cards */
+.card { border-radius: 12px; margin-bottom: 14px; overflow: hidden; background: white; box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+.card-header { color: white; padding: 14px 18px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+.card-header .left { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.card-header .emoji { font-size: 22px; }
+.card-header .name { font-size: 17px; font-weight: 700; }
+.card-header .types { font-size: 13px; opacity: .85; }
+.card-header .arrow { font-size: 18px; transition: transform .2s; }
+.card-header .arrow.open { transform: rotate(180deg); }
+.card-body { padding: 16px 18px; display: none; }
+.card-body.open { display: block; }
+.card-motto { font-style: italic; color: #555; margin-bottom: 14px; font-size: 13.5px; line-height: 1.5; }
+
+.section-block { margin-bottom: 12px; }
+.section-label { padding: 8px 12px; border-radius: 6px; font-weight: 700; font-size: 13.5px; color: #333; margin-bottom: 6px; }
+.section-block ul { padding-left: 20px; margin: 0; }
+.section-block li { font-size: 13px; line-height: 1.55; margin-bottom: 3px; }
+
+/* Communication */
+.matrix { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; max-width: 360px; margin: 12px auto; }
+.matrix-cell { color: white; padding: 14px 8px; border-radius: 8px; text-align: center; }
+.matrix-cell .pair { font-size: 22px; font-weight: 800; }
+.matrix-cell .label { font-size: 11px; opacity: .9; }
+.axis-info { font-size: 11px; color: #999; text-align: center; margin-bottom: 12px; }
+
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+.tag { padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+
+.do-dont { display: flex; gap: 10px; flex-wrap: wrap; }
+.do-dont > div { flex: 1 1 140px; border-radius: 8px; padding: 10px; }
+.do-dont .do-box { background: #E8F5E9; }
+.do-dont .dont-box { background: #FFEBEE; }
+.do-dont h4 { font-size: 13px; margin-bottom: 4px; }
+.do-dont ul { padding-left: 16px; margin: 0; }
+.do-dont li { font-size: 12px; margin-bottom: 2px; line-height: 1.4; }
+
+.footer { text-align: center; padding: 24px 16px; font-size: 11px; color: #aaa; border-top: 1px solid #e0e0e0; margin-top: 24px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="sub">UKRATLANTIC — Team Efficiency</div>
+  <h1>MBTI Toolkit</h1>
+  <p>Practical applications for the management team</p>
+</div>
+
+<div class="lang-bar">
+  <button class="lang-btn active" data-lang="en">English</button>
+  <button class="lang-btn" data-lang="fr">Français</button>
+  <button class="lang-btn" data-lang="ua">Українська</button>
+</div>
+
+<div class="tabs">
+  <button class="tab-btn active" data-tab="stress">🧠 <span data-i18n="tab-stress">Stress</span></button>
+  <button class="tab-btn" data-tab="comm">💬 <span data-i18n="tab-comm">Communication</span></button>
+</div>
+
+<div class="content">
+  <div id="stress-section">
+    <div class="section-title">
+      <h2 data-i18n="stress-title">MBTI &amp; Stress Management</h2>
+      <p data-i18n="stress-sub">8 stress reaction profiles — Tap to open</p>
+    </div>
+    <div id="stress-cards"></div>
+  </div>
+  <div id="comm-section" style="display:none">
+    <div class="section-title">
+      <h2 data-i18n="comm-title">MBTI &amp; Communication Styles</h2>
+      <p data-i18n="comm-sub">4 styles — Characteristics &amp; how to convince</p>
+    </div>
+    <div id="comm-matrix"></div>
+    <div id="comm-cards"></div>
+  </div>
+</div>
+
+<div class="footer">UKRATLANTIC Team Efficiency — April 1st, 2026 — Confidential</div>
+
+<script>
+// ============ DATA ============
+const i18n = {
+  en: { "tab-stress":"Stress","tab-comm":"Communication","stress-title":"MBTI & Stress Management","stress-sub":"8 stress reaction profiles — Tap to open","comm-title":"MBTI & Communication Styles","comm-sub":"4 styles — Characteristics & how to convince",best:"At their best",l1:"Exaggeration (level 1)",l2:"Opposite of themselves (level 2)",restore:"How to restore balance?",chars:"Characteristics",convince:"How to convince this style",doL:"Do",dontL:"Don't",axisV:"Attention to relationship",axisH:"Detail of information" },
+  fr: { "tab-stress":"Stress","tab-comm":"Communication","stress-title":"MBTI & Gestion du stress","stress-sub":"8 profils de réaction sous stress — Appuyez pour ouvrir","comm-title":"MBTI & Styles de communication","comm-sub":"4 styles — Caractéristiques & comment convaincre",best:"Au meilleur d'eux-mêmes",l1:"Exagération (niveau 1)",l2:"À l'opposé (niveau 2)",restore:"Comment rétablir l'équilibre ?",chars:"Caractéristiques",convince:"Comment convaincre ce style",doL:"À faire",dontL:"À éviter",axisV:"Attention à la relation",axisH:"Détail des informations" },
+  ua: { "tab-stress":"Стрес","tab-comm":"Комунікація","stress-title":"MBTI & Управління стресом","stress-sub":"8 профілів реакцій на стрес — Натисніть, щоб відкрити","comm-title":"MBTI & Стилі комунікації","comm-sub":"4 стилі — Характеристики та як переконати",best:"У кращому вигляді",l1:"Перебільшення (рівень 1)",l2:"Протилежність собі (рівень 2)",restore:"Як відновити баланс?",chars:"Характеристики",convince:"Як переконати цей стиль",doL:"Робити",dontL:"Не робити",axisV:"Увага до стосунків",axisH:"Деталізація інформації" }
+};
+
+const stress = [
+  { emoji:"🏃",color:"#E8772E",
+    en:{name:"Activists",types:"ESTP / ESFP",fn:"Extraverted Sensing (Se)",motto:"Live in the moment and diversify experiences using your 5 senses.",best:["Fully live in the present moment","Actively seek stimulation and varied experiences","Appreciate thrills and strong sensations","Trust experience and what works","Take action quickly (\"doers\")","Communicative and sociable","Attentive to details"],l1:["Can get bored quickly","Sometimes provoke a crisis just to create excitement","Talk constantly, become hyperactive","Focus excessively on details, lose the big picture"],l2:["Withdraw, feel inner confusion","Feel overwhelmed by all possibilities","See problems where there are none","Unrealistic fears, catastrophic scenarios"],restore:["Engage in collective physical activities","Switch back to action mode, set up an emergency plan","Ask for feedback with factual arguments","Rely on others to help establish priorities"]},
+    fr:{name:"Expérimentateurs",types:"ESTP / ESFP",fn:"Sensation extravertie (Se)",motto:"Vivre le moment présent et diversifier ses expériences en s'appuyant sur ses 5 sens.",best:["Vivent pleinement l'instant présent","Recherchent activement des stimulations variées","Apprécient les sensations fortes","Font confiance à l'expérience et à ce qui marche","Se mettent en action rapidement (« faiseurs »)","Sont communicatifs et sociables","Sont attentifs aux détails"],l1:["Peuvent s'ennuyer / se lasser rapidement","Provoquent parfois une crise pour mettre de l'animation","Parlent constamment, deviennent hyperactifs","Se concentrent excessivement sur les détails"],l2:["Se renferment, confusion intérieure","Se sentent submergés par les possibilités","Voient des problèmes là où il n'y en a pas","Craintes irréalistes, scénarios catastrophes"],restore:["Activités physiques collectives et ludiques","Se remettre en mode action-réaction","Demander un feedback factuel pour relativiser","S'appuyer sur d'autres pour les priorités"]},
+    ua:{name:"Експериментатори",types:"ESTP / ESFP",fn:"Екстравертне відчуття (Se)",motto:"Жити моментом та урізноманітнювати досвід через 5 органів чуття.",best:["Повністю живуть теперішнім моментом","Активно шукають різноманітний досвід","Цінують гострі відчуття","Довіряють досвіду та тому, що працює","Швидко переходять до дій","Комунікабельні та товариські","Уважні до деталей"],l1:["Швидко нудьгуються","Провокують кризу заради пожвавлення","Говорять безперервно, гіперактивні","Надмірно зосереджені на деталях"],l2:["Замикаються, внутрішня плутанина","Пригнічені всіма можливостями","Бачать проблеми там, де їх немає","Нереалістичні страхи, катастрофічні сценарії"],restore:["Колективні фізичні активності","Повернутися в режим дії","Зворотний зв'язок з реалістичними аргументами","Спиратися на інших для пріоритетів"]}
+  },
+  { emoji:"📚",color:"#005B96",
+    en:{name:"Conservers",types:"ISTJ / ISFJ",fn:"Introverted Sensing (Si)",motto:"Memorize experiences, compare with what has been lived and capitalize.",best:["Sort and classify information","Focus on how they experienced things","Excellent memory, integrate new data","Focus on relevant facts linked to past","Rely on experience to solve problems","Take time to reflect before acting"],l1:["Persist finding facts, lost in details","Rigid about their ideas","Reject new ideas, fear the unknown","Trust only their own experience","Withdraw and stop deciding"],l2:["Dark thoughts, catastrophic scenarios","Show impulsivity, uncharacteristic behaviour","Lose control of facts and data","Suddenly attracted to the irrational"],restore:["Find listeners without judgment","Need alone time for values/logical analysis","Ensure sufficient information to sort things out"]},
+    fr:{name:"Gardiens du temple",types:"ISTJ / ISFJ",fn:"Sensation introvertie (Si)",motto:"Mémoriser les expériences, les comparer et capitaliser.",best:["Trient et classent les informations","Se concentrent sur leur vécu","Excellente mémoire, intègrent les nouvelles données","Se concentrent sur les faits pertinents","S'appuient sur leur expérience","Prennent le temps de réfléchir avant d'agir"],l1:["S'obstinent sur les faits, perdus dans les détails","Se raidissent sur leurs idées","Rejettent les idées nouvelles, inquiétude face à l'inconnu","Ne font confiance qu'à leur expérience","Se renferment, ne décident plus"],l2:["Idées noires, scénarios catastrophes","Impulsivité, comportement inhabituel","Perdent le contrôle des faits","Attirés par l'irrationnel"],restore:["Trouver des personnes à l'écoute sans jugement","Besoin de solitude pour se reconnecter","S'assurer de disposer d'informations suffisantes"]},
+    ua:{name:"Охоронці традицій",types:"ISTJ / ISFJ",fn:"Інтровертне відчуття (Si)",motto:"Запам'ятовувати досвід, порівнювати та використовувати.",best:["Сортують і класифікують інформацію","Зосереджуються на пережитому","Чудова пам'ять","Зосереджені на релевантних фактах","Спираються на досвід","Обдумують перед дією"],l1:["Наполегливо шукають факти, губляться в деталях","Жорсткі у своїх ідеях","Відкидають нове, тривога перед невідомим","Довіряють лише собі","Замикаються, не приймають рішень"],l2:["Чорні думки, катастрофічні сценарії","Імпульсивність, нехарактерна поведінка","Втрачають контроль над фактами","Тягнуться до ірраціонального"],restore:["Знайти слухачів без осуду","Потребують самотності","Переконатися в достатності інформації"]}
+  },
+  { emoji:"💡",color:"#009B8D",
+    en:{name:"Explorers",types:"ENFP / ENTP",fn:"Extraverted Intuition (Ne)",motto:"Explore and promote opportunities and new ideas.",best:["Explore the world for new ideas","Seek ways to create change","Show creativity and ingenuity","Focus on future possibilities"],l1:["Lost imagining possibilities","See connections everywhere","Seek novelty just to be different","Cannot decide (\"choosing = giving up\")","Tend to scatter and forget"],l2:["Feel isolated and alone","Focus on unimportant details","Imaginary physical symptoms","Neglect bodily needs"],restore:["Need time to experiment themselves","Rely on others for details","Share with trusted people","Step back to analyze and decide"]},
+    fr:{name:"Explorateurs",types:"ENFP / ENTP",fn:"Intuition extravertie (Ne)",motto:"Explorer et promouvoir les opportunités et les idées nouvelles.",best:["Explorent le monde pour de nouvelles idées","Recherchent des manières de créer un changement","Font preuve de créativité et d'ingéniosité","Se concentrent sur les possibilités futures"],l1:["Se perdent dans l'imagination des possibilités","Voient des liens partout","Recherchent la nouveauté pour se distinguer","Ne parviennent plus à décider","Se dispersent, perdent des choses"],l2:["Se sentent isolés et seuls","Se concentrent sur des détails sans importance","Symptômes physiques imaginaires","Négligent leurs besoins corporels"],restore:["Besoin de temps pour expérimenter","S'appuyer sur d'autres pour les détails","Partager avec des proches","Prendre du recul pour analyser"]},
+    ua:{name:"Дослідники",types:"ENFP / ENTP",fn:"Екстравертна інтуїція (Ne)",motto:"Досліджувати та просувати нові ідеї.",best:["Досліджують світ заради нових ідей","Шукають способи створити зміни","Креативні та винахідливі","Зосереджені на майбутніх можливостях"],l1:["Губляться в уяві","Бачать зв'язки скрізь","Шукають новизну","Не можуть вирішити","Розпорошуються"],l2:["Почуваються ізольованими","Зосереджуються на неважливих деталях","Уявні фізичні симптоми","Нехтують тілесними потребами"],restore:["Потребують часу для досвіду","Спиратися на інших","Ділитися з близькими","Відступити для аналізу"]}
+  },
+  { emoji:"🔮",color:"#6A1B9A",
+    en:{name:"Visionaries",types:"INFJ / INTJ",fn:"Introverted Intuition (Ni)",motto:"Perceive underlying connections and synthesize into a long-term vision.",best:["Develop a personal worldview","See things from different angles","Insightful, long-term vision","Seek meaning, see connections","Build frameworks and theories"],l1:["Visions disconnected from reality","Overcomplicate things","Think their view is the only valid one","Withdraw, don't ask for help"],l2:["Risk through extreme physical activities","Excessive attention to details","Want to impose order","Contradictory attitude"],restore:["Need alone time for thoughts","Rely on others for details","Share but don't expect advice","Step back to analyze"]},
+    fr:{name:"Visionnaires",types:"INFJ / INTJ",fn:"Intuition introvertie (Ni)",motto:"Percevoir les liens sous-jacents et les synthétiser en vision globale.",best:["Développent une vision personnelle du monde","Voient les choses sous des angles différents","Perspicaces, vision à long terme","En quête de sens, voient les liens","Élaborent des schémas et théories"],l1:["Visions déconnectées de la réalité","Complexifient les choses","Leur vision est la seule pertinente","Se replient, ne demandent pas d'aide"],l2:["Activités physiques extrêmes","Attention excessive aux détails","Veulent mettre de l'ordre","Attitude contradictoire"],restore:["Temps seuls pour se reconnecter","S'appuyer sur d'autres pour les détails","Partagent mais n'attendent pas de conseils","Prennent du recul pour analyser"]},
+    ua:{name:"Візіонери",types:"INFJ / INTJ",fn:"Інтровертна інтуїція (Ni)",motto:"Сприймати приховані зв'язки та синтезувати в довгострокове бачення.",best:["Розвивають особисте бачення","Бачать під різними кутами","Проникливі, довгострокове бачення","Шукають сенс","Створюють теорії"],l1:["Бачення відірване від реальності","Ускладнюють речі","Їхнє бачення єдино правильне","Замикаються"],l2:["Ризикують через екстрем","Надмірна увага до деталей","Хочуть навести порядок","Суперечлива поведінка"],restore:["Час наодинці","Спиратися на інших","Діляться, але не чекають порад","Піднятися над ситуацією"]}
+  },
+  { emoji:"📋",color:"#C62828",
+    en:{name:"Directors",types:"ESTJ / ENTJ",fn:"Extraverted Thinking (Te)",motto:"Organize and structure the environment logically and efficiently.",best:["Seek to bring order","Focus on goals, determined","Test logic using critical thinking","Like to take charge"],l1:["Become too tough and demanding","Dominant and excessively critical","Think everything is logical","Oversimplify things"],l2:["Hypersensitivity, feel unloved","Feel persecuted, victim posture","Emotional outbursts"],restore:["Talk with trusted people","Exchange with empathetic people","Analyze with more nuance","Challenge viewpoint with other opinions"]},
+    fr:{name:"Organisateurs",types:"ESTJ / ENTJ",fn:"Thinking extraverti (Te)",motto:"Organiser et structurer l'environnement de manière logique et efficace.",best:["Cherchent à mettre de l'ordre","Concentrés sur les objectifs, déterminés","Testent la logique avec esprit critique","Aiment prendre en charge"],l1:["Se montrent trop durs et exigeants","Dominants et excessivement critiques","Tout peut s'expliquer logiquement","Simplifient à outrance"],l2:["Hypersensibilité, se sentent mal aimés","Impression d'être persécutés","Irruptions émotionnelles"],restore:["Parler avec des personnes de confiance","Échanger avec des personnes empathiques","Analyser avec plus de nuance","Challenger leur point de vue"]},
+    ua:{name:"Організатори",types:"ESTJ / ENTJ",fn:"Екстравертне мислення (Te)",motto:"Організовувати середовище логічно та ефективно.",best:["Прагнуть навести порядок","Зосереджені на цілях","Перевіряють логіку","Люблять відповідальність"],l1:["Занадто жорсткі","Домінуючі та критичні","Все можна пояснити логічно","Надмірно спрощують"],l2:["Гіперчутливість","Відчуття переслідування","Емоційні спалахи"],restore:["Говорити з довіреними людьми","Спілкуватися з емпатичними","Аналізувати менш категорично","Зіставити з іншими думками"]}
+  },
+  { emoji:"🧠",color:"#1565C0",
+    en:{name:"Analysts",types:"ISTP / INTP",fn:"Introverted Thinking (Ti)",motto:"Seek a rational explanation through continuous questioning.",best:["Organize inner thought logically","Seek truth and principles","Analytical approach","Concentrate deeply, show objectivity"],l1:["Persist seeking ultimate truth","Accept only their own logic","Very picky about coherence","Detach from others"],l2:["Emotional outbursts","Reactive to rejection","Binary extreme emotions"],restore:["Need distance from others","Not being judged negatively","Left alone but available","Confront emotions with facts"]},
+    fr:{name:"Analystes",types:"ISTP / INTP",fn:"Thinking introverti (Ti)",motto:"Chercher une explication rationnelle par un questionnement continu.",best:["Organisent leur pensée logiquement","Recherchent la vérité et les principes","Approche analytique et logique","Savent se concentrer, objectifs"],l1:["Recherche de la vérité ultime","N'acceptent que leur logique","Très pointilleux sur la cohérence","Se détachent des autres"],l2:["Irruptions émotionnelles","Très réactifs au rejet","Émotions très binaires"],restore:["Maintenir une distance","Ne pas se sentir jugés","Être laissés tranquilles","Relativiser par les faits"]},
+    ua:{name:"Аналітики",types:"ISTP / INTP",fn:"Інтровертне мислення (Ti)",motto:"Шукати раціональне пояснення через запитування.",best:["Організовують мислення логічно","Шукають істину","Аналітичний підхід","Зосереджені та об'єктивні"],l1:["Шукають абсолютну істину","Приймають лише свою логіку","Прискіпливі","Відсторонюються від інших"],l2:["Емоційні спалахи","Реагують на відторгнення","Чорно-білі емоції"],restore:["Потребують дистанції","Без негативних оцінок","Залишити в спокої","Зіставити з фактами"]}
+  },
+  { emoji:"🤝",color:"#E91E63",
+    en:{name:"Nurturers",types:"ESFJ / ENFJ",fn:"Extraverted Feeling (Fe)",motto:"Create harmony with shared values; focus on others' needs.",best:["Create harmonious relationships","Attentive to others' needs","Warm and caring","Organize world by values"],l1:["Ignore problems for superficial harmony","Insistent in support","Forget themselves for others","Too intrusive in attention"],l2:["Very self-critical","Resort to rigid logic","Compulsively search for truth"],restore:["Alone time for feelings and values","Try a new direction","Others respect their need for quiet","Seek more information for perspective"]},
+    fr:{name:"Accompagnateurs",types:"ESFJ / ENFJ",fn:"Feeling extraverti (Fe)",motto:"Créer de l'harmonie avec des valeurs partagées ; se centrer sur les besoins des autres.",best:["Créent des relations harmonieuses","À l'écoute des besoins des autres","Chaleureux, prennent soin des autres","Organisent le monde selon leurs valeurs"],l1:["Ignorent les problèmes pour l'harmonie","Insistants dans leur soutien","S'oublient eux-mêmes","Trop intrusifs dans leur attention"],l2:["Très critiques envers eux-mêmes","Logique compliquée et rigide","Recherche compulsive de la vérité"],restore:["Temps seuls pour les ressentis et valeurs","Se lancer dans une nouvelle direction","Respect de leur besoin de tranquillité","Rechercher des infos pour relativiser"]},
+    ua:{name:"Супроводжувачі",types:"ESFJ / ENFJ",fn:"Екстравертне почуття (Fe)",motto:"Створювати гармонію зі спільними цінностями.",best:["Гармонійні стосунки","Уважні до потреб інших","Теплі та турботливі","Організовують світ за цінностями"],l1:["Ігнорують проблеми заради гармонії","Наполегливі у підтримці","Забувають про себе","Занадто нав'язливі"],l2:["Дуже самокритичні","Жорстка логіка","Компульсивний пошук істини"],restore:["Час наодинці для почуттів","Спробувати новий напрямок","Повага до спокою","Шукати додаткову інформацію"]}
+  },
+  { emoji:"💜",color:"#4527A0",
+    en:{name:"Consciences",types:"ISFP / INFP",fn:"Introverted Feeling (Fi)",motto:"Build internal values and create an environment in harmony with them.",best:["Live by their value system","Rich inner world","Defend convictions with passion","Empathetic and independent","Make the world better"],l1:["Isolate, cling to their vision","Cling rigidly to values","Think they must save others","Intrusive in interest for others"],l2:["Very critical or aggressive","Very self-critical","Act or judge hastily"],restore:["Pressure subsides on its own","Need alone time for values","Don't try to debate with them","Consider new facts for perspective"]},
+    fr:{name:"Idéalistes",types:"ISFP / INFP",fn:"Feeling introverti (Fi)",motto:"Élaborer des valeurs internes et vivre en harmonie avec elles.",best:["Vivent selon leurs valeurs","Monde intérieur riche","Défendent leurs convictions avec passion","Empathiques et indépendants","Rendre le monde meilleur"],l1:["S'isolent sur leur vision","S'accrochent à leurs valeurs","Pensent devoir sauver les autres","Parfois intrusifs"],l2:["Très critiques voire agressifs","Très auto-critiques","Jugements hâtifs"],restore:["La pression redescend d'elle-même","Temps seuls pour les valeurs","Ne pas chercher à débattre","Envisager des faits nouveaux"]},
+    ua:{name:"Ідеалісти",types:"ISFP / INFP",fn:"Інтровертне почуття (Fi)",motto:"Створити систему цінностей та жити в гармонії.",best:["Живуть за своїми цінностями","Багатий внутрішній світ","Захищають переконання","Емпатичні та незалежні","Роблять світ кращим"],l1:["Ізолюються","Жорстко тримаються за цінності","Хочуть рятувати інших","Нав'язливі"],l2:["Критичні або агресивні","Самокритичні","Поспішні судження"],restore:["Тиск спадає сам","Час наодинці","Не сперечатися","Нові факти для перспективи"]}
+  }
+];
+
+const comm = [
+  { pair:"ST",color:"#1565C0",
+    name:{en:"The Analyticals",fr:"Les Analytiques"},
+    chars:{en:["Practical","Down-to-earth","Logical","Detail-focused","Systematic"],fr:["Pratique","Terre à terre","Logique","Orienté détails","Systématique"]},
+    convince:{en:["Give facts and get to the point quickly","Show it saves time & money","Show how results will be measured","Answer all questions precisely","Give examples of past successes"],fr:["Expliquer les bénéfices détaillés","Montrer que c'est logique et rentable","Montrer comment mesurer les résultats","Répondre à toutes les questions","Donner des exemples de réussites"]},
+    doL:{en:["Describe pros & cons","Give facts and evidence","Be clear and direct"],fr:["Avantages et inconvénients","Faits et preuves","Clair et direct"]},
+    dontL:{en:["Be too emotional","Lack logic","Lack confidence"],fr:["Trop émotif","Manquer de logique","Manquer de confiance"]}
+  },
+  { pair:"SF",color:"#7CB342",
+    name:{en:"The Carers",fr:"Les Prévenants"},
+    chars:{en:["Practical","Friendly","Caring","People-focused","Personalized"],fr:["Pratique","Amical","Attentionné","Centré personnes","Personnalisé"]},
+    convince:{en:["Give step-by-step explanations","Practical, factual information","Concrete benefits for people","Link to immediate applications","Use personal examples"],fr:["Explications étape par étape","Infos pratiques et factuelles","Bénéfices concrets pour les personnes","Applications immédiates","Exemples personnels des autres"]},
+    doL:{en:["Show you listen","Use personal words","Be authentic"],fr:["Montrez votre écoute","Mots personnalisés","Authenticité"]},
+    dontL:{en:["Be too direct","Ignore details","Be cold/distant"],fr:["Trop direct","Ignorer les détails","Froid ou distant"]}
+  },
+  { pair:"NF",color:"#F9A825",
+    name:{en:"The Idealists",fr:"Les Idéalistes"},
+    chars:{en:["Perspicacious","Enthusiastic","Empathetic","Possibility-focused","Meaningful"],fr:["Perspicace","Enthousiaste","Empathique","Orienté possibilités","Porteur de sens"]},
+    convince:{en:["Be positive & enthusiastic","Appeal to their values","Give general guidelines","Emphasize originality","Say it friendly, not too detailed","Show how to improve relationships"],fr:["Être positif et enthousiaste","Faire appel aux valeurs","Pistes générales","Mettre l'accent sur l'originalité","De manière amicale","Montrer comment améliorer les relations"]},
+    doL:{en:["Stimulate imagination","Show energy & passion","Emphasize harmony"],fr:["Stimuler l'imagination","Énergie et passion","L'accent sur l'harmonie"]},
+    dontL:{en:["Too much detail","Miss big picture","Lack passion"],fr:["Trop de détails","Manquer la vue d'ensemble","Manquer de passion"]}
+  },
+  { pair:"NT",color:"#B71C1C",
+    name:{en:"The Visionaries",fr:"Les Visionnaires"},
+    chars:{en:["Conceptual","Analytical","Logical","System-focused","Strategic"],fr:["Conceptuel","Analytique","Logique","Orienté systèmes","Stratégique"]},
+    convince:{en:["Give scientific background","Show expertise","Be precise with words","Explain strategic fit","Show skill development","Long-term possibilities"],fr:["Théorie et recherche","Lien avec une stratégie","Implications à long terme","Être crédible","Reconnaître leur expertise","Maîtriser votre sujet"]},
+    doL:{en:["Pros/cons of options","Acknowledge expertise","Appear competent"],fr:["Avantages/inconvénients","Reconnaître l'expertise","Maîtriser le sujet"]},
+    dontL:{en:["Too emotional","Lack facts/focus","Irrelevant details"],fr:["Trop émotif","Manquer de preuves","Détails non pertinents"]}
+  }
+];
+
+// ============ RENDER ============
+let currentLang = "en";
+let currentTab = "stress";
+
+function renderStress() {
+  const L = i18n[currentLang];
+  const colors = { best:"#E8F5E9", l1:"#FFF3E0", l2:"#FFEBEE", restore:"#E3F2FD" };
+  const labels = { best:L.best, l1:L.l1, l2:L.l2, restore:L.restore };
+  let html = "";
+  stress.forEach((p,idx) => {
+    const d = p[currentLang];
+    html += `<div class="card" style="border:2px solid ${p.color}">
+      <div class="card-header" style="background:${p.color}" onclick="toggleCard(this)">
+        <div class="left"><span class="emoji">${p.emoji}</span><span class="name">${d.name}</span><span class="types">${d.types}</span></div>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="card-body">
+        <div class="card-motto">${d.fn} — ${d.motto}</div>`;
+    ["best","l1","l2","restore"].forEach(k => {
+      html += `<div class="section-block"><div class="section-label" style="background:${colors[k]}">${labels[k]}</div><ul>`;
+      d[k].forEach(item => { html += `<li>${item}</li>`; });
+      html += `</ul></div>`;
+    });
+    html += `</div></div>`;
+  });
+  document.getElementById("stress-cards").innerHTML = html;
+}
+
+function renderComm() {
+  const L = i18n[currentLang];
+  const l = currentLang === "ua" ? "en" : currentLang;
+  // Matrix
+  const matrixData = [
+    {pair:"NF",color:"#F9A825",label:{en:"Idealists",fr:"Idéalistes"}},
+    {pair:"SF",color:"#7CB342",label:{en:"Carers",fr:"Prévenants"}},
+    {pair:"NT",color:"#B71C1C",label:{en:"Visionaries",fr:"Visionnaires"}},
+    {pair:"ST",color:"#1565C0",label:{en:"Analyticals",fr:"Analytiques"}}
+  ];
+  let mhtml = `<div class="matrix">`;
+  matrixData.forEach(m => {
+    mhtml += `<div class="matrix-cell" style="background:${m.color}"><div class="pair">${m.pair}</div><div class="label">${m.label[l]}</div></div>`;
+  });
+  mhtml += `</div><div class="axis-info">↕ ${L.axisV} &nbsp;|&nbsp; ↔ ${L.axisH}</div>`;
+  document.getElementById("comm-matrix").innerHTML = mhtml;
+
+  // Cards
+  let html = "";
+  comm.forEach(s => {
+    const nm = s.name[l];
+    html += `<div class="card" style="border:3px solid ${s.color}">
+      <div class="card-header" style="background:${s.color}" onclick="toggleCard(this)">
+        <div class="left"><span class="name" style="font-size:22px;margin-right:10px">${s.pair}</span><span class="types">${nm}</span></div>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="card-body">
+        <div style="margin-bottom:12px"><div style="font-weight:700;font-size:14px;color:${s.color};margin-bottom:6px">${L.chars}</div><div class="tags">`;
+    s.chars[l].forEach(c => { html += `<span class="tag" style="background:${s.color}18;color:${s.color}">${c}</span>`; });
+    html += `</div></div>
+        <div style="margin-bottom:12px"><div style="font-weight:700;font-size:14px;color:${s.color};margin-bottom:6px">${L.convince}</div><ul>`;
+    s.convince[l].forEach(t => { html += `<li style="font-size:13px;line-height:1.6">${t}</li>`; });
+    html += `</ul></div>
+        <div class="do-dont">
+          <div class="do-box"><h4 style="color:#2E7D32">✅ ${L.doL}</h4><ul>`;
+    s.doL[l].forEach(d => { html += `<li>${d}</li>`; });
+    html += `</ul></div><div class="dont-box"><h4 style="color:#C62828">❌ ${L.dontL}</h4><ul>`;
+    s.dontL[l].forEach(d => { html += `<li>${d}</li>`; });
+    html += `</ul></div></div></div></div>`;
+  });
+  document.getElementById("comm-cards").innerHTML = html;
+}
+
+function toggleCard(header) {
+  const body = header.nextElementSibling;
+  const arrow = header.querySelector(".arrow");
+  body.classList.toggle("open");
+  arrow.classList.toggle("open");
+}
+
+function setLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll(".lang-btn").forEach(b => b.classList.toggle("active", b.dataset.lang === lang));
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.dataset.i18n;
+    if (i18n[lang][key]) el.textContent = i18n[lang][key];
+  });
+  renderStress();
+  renderComm();
+}
+
+function setTab(tab) {
+  currentTab = tab;
+  document.querySelectorAll(".tab-btn").forEach(b => b.classList.toggle("active", b.dataset.tab === tab));
+  document.getElementById("stress-section").style.display = tab === "stress" ? "block" : "none";
+  document.getElementById("comm-section").style.display = tab === "comm" ? "block" : "none";
+}
+
+// Event listeners
+document.querySelectorAll(".lang-btn").forEach(b => b.addEventListener("click", () => setLang(b.dataset.lang)));
+document.querySelectorAll(".tab-btn").forEach(b => b.addEventListener("click", () => setTab(b.dataset.tab)));
+
+// Initial render
+renderStress();
+renderComm();
+</script>
+</body>
+</html>
